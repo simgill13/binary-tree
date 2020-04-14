@@ -1,22 +1,21 @@
 function Tree() {
   this.root = null;
-};
+}
 
 function Node(value) {
   this.value = value;
   this.left = null;
   this.right = null;
-};
+}
 
 Tree.prototype.addNode = function(value) {
   let node = new Node(value);
   if (this.root == null) {
     this.root = node;
   } else {
-    this.root.addNode(node)
+    this.root.addNode(node);
   }
 };
-
 
 Node.prototype.addNode = function(n) {
   if (n.value < this.value) {
@@ -25,7 +24,7 @@ Node.prototype.addNode = function(n) {
     } else {
       this.left.addNode(n);
     }
-  }else{
+  } else {
     if (this.right == null) {
       this.right = n;
     } else {
@@ -34,10 +33,24 @@ Node.prototype.addNode = function(n) {
   }
 };
 
+Node.prototype.visit = function() {
+  if (this.left) {
+    this.left.visit();
+  }
+  console.log(this.value);
+  if (this.right) {
+    this.right.visit();
+  }
+};
+
+Tree.prototype.traverse = function() {
+  this.root.visit();
+};
+
 let tree = new Tree();
-tree.addNode(5);
-tree.addNode(3);
-tree.addNode(7);
-tree.addNode(6);
+for (let i = 0; i < 10; i++) {
+  tree.addNode(Math.floor(Math.random() * 100) + 1);
+}
+tree.traverse();
 
 console.log("final", tree);
